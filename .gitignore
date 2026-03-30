@@ -1,0 +1,31 @@
+# Runtime data
+google_maps_scraper_fullstack/checkpoints/
+google_maps_scraper_fullstack/history/
+google_maps_scraper_fullstack/crm_job_files/
+google_maps_scraper_fullstack/crm.sqlite3
+google_maps_scraper_fullstack/crm.sqlite3-shm
+google_maps_scraper_fullstack/crm.sqlite3-wal
+google_maps_scraper_fullstack/jobs_history.json
+google_maps_scraper_fullstack/saved_presets.json
+google_maps_scraper_fullstack/mini_crm_leads.legacy.json
+google_maps_scraper_fullstack/zip_packs.json
+
+# Logs
+*.log
+google_maps_scraper_fullstack/launcher_runtime.*
+
+# Large data files
+google_maps_scraper_fullstack/data/*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# Build
+dist/
+build/
+*.spec

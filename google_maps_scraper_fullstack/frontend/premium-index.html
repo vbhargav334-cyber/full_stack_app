@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TitanFlow AI - Lead Intelligence</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/modern-styles.css">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-bolt"></i>
+      </div>
+      <div class="brand-text">TitanFlow AI</div>
+    </div>
+
+    <nav class="nav-section">
+      <div class="nav-label">Platform</div>
+      <a href="#" class="nav-item active" onclick="showSection('dashboard', this)">
+        <i class="fa-solid fa-grid-2"></i> Overview
+      </a>
+      <a href="#" class="nav-item" onclick="showSection('scraper', this)">
+        <i class="fa-solid fa-satellite-dish"></i> Live Scraper
+      </a>
+      <a href="#" class="nav-item" onclick="showSection('results', this)">
+        <i class="fa-solid fa-database"></i> Data & Leads
+      </a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-label">Resources</div>
+      <a href="#" class="nav-item">
+        <i class="fa-regular fa-file-lines"></i> System Guide
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-globe"></i> Proxy Network
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
+    </nav>
+
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <div class="status-text">SYSTEM OPERATIONAL</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="page-title">
+        <h1 id="page-header">Dashboard</h1>
+        <p id="page-sub">Real-time surveillance and extraction overview.</p>
+      </div>
+      <div class="network-badge">
+        <i class="fa-solid fa-circle-nodes"></i> NETWORK ONLINE
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+
+      <!-- DASHBOARD SECTION -->
+      <div id="section-dashboard" class="animate-fade">
+        <!-- Stats Row -->
+        <div class="stats-grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Total Leads</span>
+              <i class="fa-solid fa-database text-muted"></i>
+            </div>
+            <div class="card-value">12,453</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-arrow-trend-up"></i> +12.5% from yesterday
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Active Proxies</span>
+              <i class="fa-solid fa-globe text-muted"></i>
+            </div>
+            <div class="card-value">842</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-check"></i> +4% stability
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Req / Second</span>
+              <i class="fa-solid fa-bolt text-muted"></i>
+            </div>
+            <div class="card-value">48.2</div>
+            <div class="card-trend negative">
+              <i class="fa-solid fa-arrow-down"></i> -2.1% load
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Avg. Response</span>
+              <i class="fa-regular fa-clock text-muted"></i>
+            </div>
+            <div class="card-value">142ms</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-bolt"></i> Optimized
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphs & Tasks -->
+        <div class="dashboard-split">
+          <!-- Custom Bar Chart (CSS drawn) -->
+          <div class="chart-container">
+            <div class="card-header">
+              <span class="card-title">Extraction Velocity</span>
+            </div>
+            <div class="bars-wrapper">
+              <!-- Bars generated via JS or static for demo -->
+              <div class="bar-col">
+                <div class="bar" style="height: 30%"></div><span class="bar-label">00:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 45%"></div><span class="bar-label">04:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 80%"></div><span class="bar-label">08:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 100%"></div><span class="bar-label">12:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 85%"></div><span class="bar-label">16:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 55%"></div><span class="bar-label">20:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 40%"></div><span class="bar-label">24:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Tasks -->
+          <div class="task-list">
+            <div class="card-header" style="margin-bottom: 1rem;">
+              <span class="card-title">Recent Tasks</span>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-blue"></div>
+              <div class="task-info">
+                <div class="task-title">Restaurants, NYC</div>
+                <div class="task-sub">4230 leads extracted</div>
+              </div>
+              <div class="task-time">2m ago</div>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-green"></div>
+              <div class="task-info">
+                <div class="task-title">Gyms, London</div>
+                <div class="task-sub">124 leads extracted</div>
+              </div>
+              <div class="task-time">Now</div>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-gray"></div>
+              <div class="task-info">
+                <div class="task-title">Cafes, Tokyo</div>
+                <div class="task-sub">Waiting for resources</div>
+              </div>
+              <div class="task-time">Pending</div>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-blue"></div>
+              <div class="task-info">
+                <div class="task-title">Dentists, Berlin</div>
+                <div class="task-sub">854 leads extracted</div>
+              </div>
+              <div class="task-time">1h ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCRAPER SECTION -->
+      <div id="section-scraper" class="hidden">
+        <div class="scraper-grid">
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="step-title">1. Define Target</div>
+            <div class="step-desc">Enter your niche (e.g. "Pizza Shop") and location or zipcodes below.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="step-title">2. Set Protection</div>
+            <div class="step-desc">Enable Proxy Rotation and Stealth Mode to avoid IP bans.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <div class="step-title">3. Execute Task</div>
+            <div class="step-desc">Click the "RUN" button and watch the live logs as data flows in.</div>
+          </div>
+        </div>
+
+        <div class="control-panel">
+          <!-- Form -->
+          <div class="form-panel">
+            <div class="card-header">
+              <span class="card-title">TitanFlow Engine</span>
+            </div>
+
+            <div class="input-group">
+              <label>Search Input Mode</label>
+              <select id="search_input_mode" class="input-field">
+                <option value="guided">Guided (Category + Location Picker)</option>
+                <option value="manual">Manual Query (Type full search text)</option>
+              </select>
+              <div id="search_mode_hint" class="location-helper">
+                Guided mode: select category and location from dropdowns.
+              </div>
+            </div>
+            <div class="input-group" id="keyword-picker-group">
+              <label>Business Category</label>
+              <select id="keyword" class="input-field">
+                <option value="">Select Category</option>
+              </select>
+              <div class="location-helper">Choose category from the full picker list.</div>
+            </div>
+            <div class="input-group" id="category-subtype-group" style="display: none;">
+              <label id="category-subtype-label">Category Types</label>
+              <select id="category_subtypes" class="input-field" multiple size="12" style="min-height: 260px;"></select>
+              <div class="automation-actions" style="margin-top: 0.6rem;">
+                <button type="button" id="category_subtypes_select_all_btn" class="btn-secondary zip-tool-btn">Select All Types</button>
+                <button type="button" id="category_subtypes_clear_btn" class="btn-secondary zip-tool-btn">Clear Types</button>
+              </div>
+              <div id="category-subtype-hint" class="location-helper">
+                Select one type for a single scrape, or multiple types for automatic bulk category scraping.
+              </div>
+            </div>
+            <div class="input-group" id="manual-query-group" style="display: none;">
+              <label>Manual Query</label>
+              <input type="text" id="manual_query" class="input-field" placeholder="restaurants in 10001 tx usa">
+              <div class="location-helper">
+                Example: <code>restaurants in 10001 tx usa</code> or <code>dentists near Dallas TX</code>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Location Picker</label>
+              <div class="location-grid location-grid-4">
+                <select id="country_select" class="input-field">
+                  <option value="">Select Country</option>
+                </select>
+                <select id="state_select" class="input-field">
+                  <option value="">Select State</option>
+                </select>
+                <select id="city_select" class="input-field">
+                  <option value="">Select City</option>
+                </select>
+                <select id="zip_select" class="input-field">
+                  <option value="">Select ZIP</option>
+                </select>
+              </div>
+              <input type="hidden" id="location">
+              <input type="text" id="location_preview" class="input-field location-preview" placeholder="Selected location will appear here" readonly>
+              <div class="location-helper">Select country/state/city + ZIP, then build city-wise or area-wise ZIP lists. Queries run as: <code>keyword in ZIP area city state country</code>.</div>
+              <div class="zip-tools">
+                <div class="zip-tools-row">
+                  <input type="text" id="zip_filter_input" class="input-field zip-filter-input"
+                    placeholder="ZIP filter (prefix or part, e.g. 100)">
+                </div>
+                <div class="zip-tools-row">
+                  <select id="zip_area_select" class="input-field zip-area-select">
+                    <option value="">Select Area / Locality</option>
+                  </select>
+                  <input type="text" id="zip_area_input" class="input-field zip-area-input" list="zip_area_suggestions"
+                    placeholder="Or type area (e.g. SR Nagar, Brooklyn)">
+                  <button type="button" id="zip_add_area_btn" class="btn-secondary zip-tool-btn">Add Area ZIPs</button>
+                </div>
+                <datalist id="zip_area_suggestions"></datalist>
+                <div class="zip-tools-row">
+                  <button type="button" id="zip_add_selected_btn" class="btn-secondary zip-tool-btn">Add Selected ZIP</button>
+                  <button type="button" id="zip_add_city_btn" class="btn-secondary zip-tool-btn">Add All City ZIPs</button>
+                  <button type="button" id="zip_add_filtered_btn" class="btn-secondary zip-tool-btn">Add Filtered ZIPs</button>
+                  <button type="button" id="zip_clear_list_btn" class="btn-secondary zip-tool-btn">Clear ZIP List</button>
+                </div>
+                <div id="zip_selected_info" class="location-helper">
+                  No ZIPs added yet. Add selected/city ZIPs to run ZIP-wise scraping.
+                </div>
+                <textarea id="zip_selected_preview" class="input-field zip-selected-preview" rows="2"
+                  placeholder="Selected ZIP list will appear here" readonly></textarea>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Max Results</label>
+              <input type="number" id="max_results" class="input-field" value="50">
+            </div>
+            <div class="input-group" id="zip-sweep-keywords-group">
+              <label>Bulk Search Queries / Categories</label>
+              <textarea id="zip_sweep_keywords" class="input-field" rows="3"
+                style="min-height: 90px; resize: vertical;"
+                placeholder="Indian Restaurant, Italian Restaurant, American Restaurant"></textarea>
+              <div class="zip-tools" style="margin-top: 0.65rem;">
+                <div class="zip-tools-row">
+                  <input type="text" id="bulk_query_input" class="input-field zip-filter-input"
+                    placeholder="Type one search query / category, then click + Add Query">
+                  <button type="button" id="add_bulk_query_btn" class="btn-secondary zip-tool-btn">+ Add Query</button>
+                </div>
+                <div id="bulk_query_count" class="location-helper">
+                  No bulk queries added yet. Added queries will run one after another in Google Maps.
+                </div>
+                <div id="bulk_query_list" class="input-field"
+                  style="min-height: 74px; resize: vertical; white-space: normal; display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: flex-start;">
+                </div>
+              </div>
+              <div class="automation-actions" style="margin-top: 0.6rem;">
+                <button type="button" id="restaurant_keyword_pack_btn" class="btn-secondary zip-tool-btn">Load Restaurant Pack</button>
+                <button type="button" id="append_selected_keyword_btn" class="btn-secondary zip-tool-btn">Add Selected Category</button>
+                <button type="button" id="clear_bulk_keywords_btn" class="btn-secondary zip-tool-btn">Clear Bulk Keywords</button>
+              </div>
+              <div class="location-helper">
+                Add multiple search queries/categories separated by comma or new line, or use the <code>+ Add Query</code> button. These queries run one by one. Example:
+                <code>Indian Restaurant</code>, <code>Italian Restaurant</code>, <code>American Restaurant</code>.
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Workers (Parallel Browsers)</label>
+              <input type="number" id="max_workers" class="input-field" value="4" min="1" max="8">
+            </div>
+
+            <div style="margin-top: 10px; border-top: 1px solid var(--divider); padding-top: 10px;">
+              <div class="toggle-row">
+                <span class="toggle-label">Proxy Rotation</span>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Deep Email Discovery</span>
+                <label class="switch">
+                  <input type="checkbox" id="enrich_emails" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Socials & FB</span>
+                <label class="switch">
+                  <input type="checkbox" id="enrich_socials" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Collect All Emails (Slower)</span>
+                <label class="switch">
+                  <input type="checkbox" id="collect_all_emails" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Fast Mode (200+/hr)</span>
+                <label class="switch">
+                  <input type="checkbox" id="fast_mode" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Bulk ZIP Scraping (Keyword + ZIP List)</span>
+                <label class="switch">
+                  <input type="checkbox" id="bulk_zip_mode">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Bulk Keyword / Category Mode</span>
+                <label class="switch">
+                  <input type="checkbox" id="zip_sweep_enabled">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div id="scrape_mode_hint" class="location-helper" style="margin-top: 8px;">
+                Mode: Keyword Search (single location). Enable Bulk Keyword Mode to run many categories at once.
+              </div>
+            </div>
+
+            <div class="automation-lab">
+              <div class="automation-lab-header">
+                <span>Automation Lab</span>
+                <span class="location-helper">Presets, ZIP packs, and query preview</span>
+              </div>
+              <div class="automation-lab-grid">
+                <div class="automation-block">
+                  <label>Preset Name</label>
+                  <input type="text" id="preset_name" class="input-field" placeholder="Example: USA Dentists Weekly">
+                  <div class="automation-actions">
+                    <button type="button" id="preset_save_btn" class="btn-secondary zip-tool-btn">Save Preset</button>
+                    <button type="button" id="query_preview_btn" class="btn-secondary zip-tool-btn">Preview Queries</button>
+                  </div>
+                  <select id="preset_select" class="input-field">
+                    <option value="">Saved Presets</option>
+                  </select>
+                  <div class="automation-actions">
+                    <button type="button" id="preset_load_btn" class="btn-secondary zip-tool-btn">Load Preset</button>
+                    <button type="button" id="preset_delete_btn" class="btn-danger zip-tool-btn">Delete</button>
+                  </div>
+                </div>
+                <div class="automation-block">
+                  <label>ZIP Pack Name</label>
+                  <input type="text" id="zip_pack_name" class="input-field" placeholder="Example: NYC Core ZIPs">
+                  <div class="automation-actions">
+                    <button type="button" id="zip_pack_save_btn" class="btn-secondary zip-tool-btn">Save ZIP Pack</button>
+                    <button type="button" id="zip_pack_import_btn" class="btn-secondary zip-tool-btn">Import CSV</button>
+                  </div>
+                  <select id="zip_pack_select" class="input-field">
+                    <option value="">ZIP Packs</option>
+                  </select>
+                  <div class="automation-actions">
+                    <button type="button" id="zip_pack_load_btn" class="btn-secondary zip-tool-btn">Load Pack</button>
+                    <button type="button" id="zip_pack_export_btn" class="btn-secondary zip-tool-btn">Export CSV</button>
+                    <button type="button" id="zip_pack_delete_btn" class="btn-danger zip-tool-btn">Delete</button>
+                  </div>
+                  <input type="file" id="zip_pack_import_file" accept=".csv" style="display:none;">
+                </div>
+              </div>
+              <div class="automation-preview">
+                <div id="query_preview_meta" class="location-helper">Query preview will appear here.</div>
+                <textarea id="query_preview_output" class="input-field query-preview-output" rows="4"
+                  placeholder="Click Preview Queries to inspect generated queries before running." readonly></textarea>
+              </div>
+            </div>
+
+            <button type="button" id="run-btn" class="btn-primary" onclick="startScrape()">
+              <i class="fa-solid fa-bolt"></i> RUN
+            </button>
+          </div>
+
+          <!-- Console -->
+          <div class="console-panel">
+            <div class="console-header">
+              <div class="console-dot dot-green"></div>
+              <div class="console-title">LIVE_CONSOLE_V2.0</div>
+              <div style="margin-left: auto; font-family: monospace; color: #64748b; font-size: 0.75rem;">bash --verbose
+              </div>
+            </div>
+            <div class="console-body" id="console-output">
+              <div class="log-entry dim">// System initialized...</div>
+              <div class="log-entry dim">// Waiting for search criteria...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTS SECTION -->
+      <div id="section-results" class="hidden">
+        <div class="card-header" style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+          <span class="card-title">Intelligence Database</span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button type="button" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex;"
+              onclick="exportToExcel()">
+              <i class="fa-solid fa-file-excel"></i> Export Excel
+            </button>
+            <button type="button" class="btn-primary" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex;"
+              onclick="exportToCSV()">
+              <i class="fa-solid fa-download"></i> Export CSV
+            </button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="results-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Place ID</th>
+                <th>Maps</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Socials</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Results will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="static/premium-app.js?v=20260330-4"></script>
+  <script>
+    // Inline navigation logic for immediate responsiveness
+    function showSection(sectionId, element) {
+      // Hide all sections
+      document.getElementById('section-dashboard').classList.add('hidden');
+      document.getElementById('section-scraper').classList.add('hidden');
+      document.getElementById('section-results').classList.add('hidden');
+
+      // Show target
+      document.getElementById('section-' + sectionId).classList.remove('hidden');
+
+      // Update Headers
+      const header = document.getElementById('page-header');
+      const sub = document.getElementById('page-sub');
+      if (sectionId === 'dashboard') {
+        header.innerText = 'Overview';
+        sub.innerText = 'Real-time surveillance and extraction overview.';
+      } else if (sectionId === 'scraper') {
+        header.innerText = 'Live Scraper';
+        sub.innerText = 'Active extraction missions and console logs.';
+      } else {
+        header.innerText = 'Data & Leads';
+        sub.innerText = 'Verified business intelligence database.';
+      }
+
+      // Update Nav
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (element) element.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TitanFlow AI - Lead Intelligence</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/modern-styles.css">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-layer-group"></i>
+      </div>
+      <div class="brand-text">TitanFlow AI</div>
+    </div>
+
+    <nav class="nav-section">
+      <div class="nav-label">Platform</div>
+      <a href="#" class="nav-item active" onclick="showSection('dashboard', this)">
+        <i class="fa-solid fa-grid-2"></i> Overview
+      </a>
+      <a href="#" class="nav-item" onclick="showSection('scraper', this)">
+        <i class="fa-solid fa-satellite-dish"></i> Live Scraper
+      </a>
+      <a href="#" class="nav-item" onclick="showSection('database', this)">
+        <i class="fa-solid fa-database"></i> Database
+      </a>
+    </nav>
+
+    <nav class="nav-section">
+      <div class="nav-label">Resources</div>
+      <a href="#" class="nav-item" onclick="showSection('guide', this)">
+        <i class="fa-regular fa-file-lines"></i> System Guide
+      </a>
+      <a href="#" class="nav-item" onclick="showSection('settings', this)">
+        <i class="fa-solid fa-gear"></i> Settings
+      </a>
+    </nav>
+
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <div class="status-text">SYSTEM OPERATIONAL</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="page-title">
+        <h1 id="page-header">Dashboard</h1>
+        <p id="page-sub">Real-time surveillance and extraction overview.</p>
+      </div>
+      <div class="network-badge">
+        <i class="fa-solid fa-circle-nodes"></i> NETWORK ONLINE
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+
+      <!-- DASHBOARD SECTION -->
+      <div id="section-dashboard" class="animate-fade">
+        <!-- Stats Row -->
+        <div class="stats-grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Total Leads</span>
+              <i class="fa-solid fa-database text-muted"></i>
+            </div>
+            <div class="card-value">12,453</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-arrow-trend-up"></i> +12.5% from yesterday
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Active Proxies</span>
+              <i class="fa-solid fa-globe text-muted"></i>
+            </div>
+            <div class="card-value">842</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-check"></i> +4% stability
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Req / Second</span>
+              <i class="fa-solid fa-bolt text-muted"></i>
+            </div>
+            <div class="card-value">48.2</div>
+            <div class="card-trend negative">
+              <i class="fa-solid fa-arrow-down"></i> -2.1% load
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Avg. Response</span>
+              <i class="fa-regular fa-clock text-muted"></i>
+            </div>
+            <div class="card-value">142ms</div>
+            <div class="card-trend">
+              <i class="fa-solid fa-bolt"></i> Optimized
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphs & Tasks -->
+        <div class="dashboard-split">
+          <!-- Custom Bar Chart (CSS drawn) -->
+          <div class="chart-container">
+            <div class="card-header">
+              <span class="card-title">Extraction Velocity</span>
+            </div>
+            <div class="bars-wrapper">
+              <!-- Bars generated via JS or static for demo -->
+              <div class="bar-col">
+                <div class="bar" style="height: 30%"></div><span class="bar-label">00:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 45%"></div><span class="bar-label">04:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 80%"></div><span class="bar-label">08:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 100%"></div><span class="bar-label">12:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 85%"></div><span class="bar-label">16:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 55%"></div><span class="bar-label">20:00</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height: 40%"></div><span class="bar-label">24:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Tasks -->
+          <div class="task-list">
+            <div class="card-header" style="margin-bottom: 1rem;">
+              <span class="card-title">Recent Tasks</span>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-blue"></div>
+              <div class="task-info">
+                <div class="task-title">Restaurants, NYC</div>
+                <div class="task-sub">4230 leads extracted</div>
+              </div>
+              <div class="task-time">2m ago</div>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-green"></div>
+              <div class="task-info">
+                <div class="task-title">Gyms, London</div>
+                <div class="task-sub">124 leads extracted</div>
+              </div>
+              <div class="task-time">Now</div>
+            </div>
+            <div class="task-item">
+              <div class="task-bullet bullet-gray"></div>
+              <div class="task-info">
+                <div class="task-title">Cafes, Tokyo</div>
+                <div class="task-sub">Waiting for resources</div>
+              </div>
+              <div class="task-time">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCRAPER SECTION -->
+      <div id="section-scraper" class="hidden">
+        <div class="scraper-grid">
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="step-title">1. Define Target</div>
+            <div class="step-desc">Enter your niche (e.g. "Pizza Shop") and location or zipcodes below.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="step-title">2. Set Protection</div>
+            <div class="step-desc">Enable Proxy Rotation and Stealth Mode to avoid IP bans.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <div class="step-title">3. Execute Task</div>
+            <div class="step-desc">Click the "Start Scraping" button and watch the live logs as data flows in.</div>
+          </div>
+        </div>
+
+        <div class="control-panel">
+          <!-- Form -->
+          <div class="form-panel">
+            <div class="card-header">
+              <span class="card-title">TitanFlow Engine</span>
+            </div>
+
+            <div class="input-group">
+              <label>Keyword</label>
+              <input type="text" id="keyword" class="input-field" placeholder="e.g. Real Estate Agents">
+            </div>
+            <div class="input-group">
+              <label>Location</label>
+              <input type="text" id="location" class="input-field" placeholder="e.g. Dubai, UAE">
+            </div>
+            <div class="input-group">
+              <label>Max Results</label>
+              <input type="number" id="max_results" class="input-field" value="50">
+            </div>
+
+            <div style="margin-top: 10px; border-top: 1px solid var(--divider); padding-top: 10px;">
+              <div class="toggle-row">
+                <span class="toggle-label">Proxy Rotation</span>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Deep Email Discovery</span>
+                <label class="switch">
+                  <input type="checkbox" id="enrich_emails" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <span class="toggle-label">Socials & FB</span>
+                <label class="switch">
+                  <input type="checkbox" id="enrich_socials" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <button class="btn-primary" onclick="startScrape()">
+              <i class="fa-solid fa-bolt"></i> START SCRAPING
+            </button>
+          </div>
+
+          <!-- Console -->
+          <div class="console-panel">
+            <div class="console-header">
+              <div class="console-dot dot-green"></div>
+              <div class="console-title">LIVE_CONSOLE_V2.0</div>
+              <div style="margin-left: auto; font-family: monospace; color: #64748b; font-size: 0.75rem;">bash --verbose
+              </div>
+            </div>
+            <div class="console-body" id="console-output">
+              <div class="log-entry dim">// System initialized...</div>
+              <div class="log-entry dim">// Waiting for search criteria...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATABASE SECTION -->
+      <div id="section-database" class="hidden">
+        <div class="card-header" style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+          <span class="card-title">Batch History</span>
+          <div>
+            <button class="btn-primary" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex;"
+              onclick="exportAll()">
+              <i class="fa-solid fa-file-excel"></i> Export All Data (Bulk)
+            </button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Task</th>
+                <th>Leads</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- History injected here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-header" style="margin-top: 2rem; margin-bottom: 1rem;">
+          <span class="card-title">Current Session Results</span>
+        </div>
+        <div class="table-container">
+          <table id="results-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Socials</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Real-time results injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GUIDE SECTION -->
+      <div id="section-guide" class="hidden">
+        <div class="doc-section">
+          <h2>System Guide</h2>
+          <p>Welcome to TitanFlow AI. This tool allows you to extract business leads from Google Maps with high
+            precision and enriched data fields.</p>
+
+          <h3>Getting Started</h3>
+          <ul>
+            <li><strong>Target:</strong> Define a specific keyword (e.g., "Plumbers") and location.</li>
+            <li><strong>Execution:</strong> The scraper uses a headless browser to navigate maps like a real user.</li>
+            <li><strong>Extraction:</strong> We automatically hunt for emails, Facebook, and Instagram profiles.</li>
+          </ul>
+
+          <h3>Proxy Network</h3>
+          <p>We use a rotated proxy network to prevent IP bans. If you see "Network Error", wait 2 minutes and retry.
+            The system automatically handles most blocks.</p>
+
+          <h3>Exports</h3>
+          <p>All data is saved to the internal database. You can export individual batches or download the entire
+            dataset as an Excel file from the "Database" tab.</p>
+        </div>
+      </div>
+
+      <!-- SETTINGS SECTION -->
+      <div id="section-settings" class="hidden">
+        <div class="doc-section">
+          <h2>System Configuration</h2>
+          <p>Adjust the engine parameters for your specific scraping needs.</p>
+
+          <div class="form-panel" style="max-width: 600px; border: none; padding: 0;">
+            <div class="input-group" style="margin-bottom: 1rem;">
+              <label>Concurrent Threads</label>
+              <input type="number" class="input-field" value="5" disabled style="opacity: 0.5;">
+              <div class="text-muted" style="font-size: 0.75rem;">Max threads limited by current license.</div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 1rem;">
+              <label>Request Delay (ms)</label>
+              <input type="number" class="input-field" value="1500">
+            </div>
+
+            <div class="toggle-row">
+              <span class="toggle-label">Auto-Save Checkpoints</span>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Headless Mode (Background)</span>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="static/premium-app.js"></script>
+  <script>
+    // Inline navigation logic for immediate responsiveness
+    function showSection(sectionId, element) {
+      // Hide all sections
+      document.getElementById('section-dashboard').classList.add('hidden');
+      document.getElementById('section-scraper').classList.add('hidden');
+      document.getElementById('section-database').classList.add('hidden');
+      document.getElementById('section-guide').classList.add('hidden');
+      document.getElementById('section-settings').classList.add('hidden');
+
+      // Show target
+      document.getElementById('section-' + sectionId).classList.remove('hidden');
+
+      // Update Headers
+      const header = document.getElementById('page-header');
+      const sub = document.getElementById('page-sub');
+
+      switch (sectionId) {
+        case 'dashboard':
+          header.innerText = 'Overview';
+          sub.innerText = 'Real-time surveillance and extraction overview.';
+          break;
+        case 'scraper':
+          header.innerText = 'Live Scraper';
+          sub.innerText = 'Active extraction missions and console logs.';
+          break;
+        case 'database':
+          header.innerText = 'Data & Leads';
+          sub.innerText = 'Persistent batch history and exports.';
+          if (window.loadHistory) window.loadHistory(); // Auto-load history
+          break;
+        case 'guide':
+          header.innerText = 'System Guide';
+          sub.innerText = 'Operational manual and best practices.';
+          break;
+        case 'settings':
+          header.innerText = 'Settings';
+          sub.innerText = 'Engine configuration and parameters.';
+          break;
+      }
+
+      // Update Nav
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (element) element.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
