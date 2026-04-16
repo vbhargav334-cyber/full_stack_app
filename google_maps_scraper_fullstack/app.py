@@ -1,5 +1,4 @@
-import functools
-import hashlib
+import hmac
 import io
 import json
 import logging
@@ -2536,9 +2535,7 @@ def _check_api_key() -> bool:
     if header.startswith("Bearer "):
         token = header[7:].strip()
         # Constant-time comparison to prevent timing attacks.
-        return hashlib.sha256(token.encode()).hexdigest() == hashlib.sha256(
-            _API_SECRET_KEY.encode()
-        ).hexdigest()
+        return hmac.compare_digest(token, _API_SECRET_KEY)
     return False
 
 
@@ -4911,7 +4908,8 @@ def download_checkpoint(job_id: str):
     # Security: ensure the file is inside our runtime data directory.
     try:
         resolved = Path(checkpoint_file).resolve()
-        if not str(resolved).startswith(str(_runtime_root_dir().resolve())):
+        allowed_prefix = str(_runtime_root_dir().resolve()) + os.sep
+        if not str(resolved).startswith(allowed_prefix):
             logger.warning(f"Blocked checkpoint download outside data dir: {resolved}")
             return jsonify({"error": "checkpoint file not available"}), 404
     except Exception:
