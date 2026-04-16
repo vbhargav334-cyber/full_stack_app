@@ -1,9 +1,12 @@
+import functools
+import hashlib
 import io
 import json
 import logging
 import math
 import os
 import re
+import secrets
 import sqlite3
 import smtplib
 import sys
@@ -2501,6 +2504,75 @@ class JobManager:
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="/static")
 # Avoid stale JS/CSS during local runs (Waitress + browser cache can otherwise keep old frontend code).
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+
+# --- Security: SECRET_KEY for session signing ---
+_secret_key = os.environ.get("FLASK_SECRET_KEY", "")
+if not _secret_key:
+    _secret_key = secrets.token_hex(32)
+    logger.warning(
+        "FLASK_SECRET_KEY is not set — using a random key. "
+        "Sessions will not persist across restarts. "
+        "Set FLASK_SECRET_KEY in your environment for production use."
+    )
+app.secret_key = _secret_key
+
+# --- Security: API key authentication ---
+_API_SECRET_KEY = os.environ.get("API_SECRET_KEY", "")
+if not _API_SECRET_KEY:
+    logger.warning(
+        "API_SECRET_KEY is not set — API authentication is DISABLED. "
+        "Set API_SECRET_KEY in your environment to require Bearer-token auth on /api/ routes."
+    )
+
+# Endpoints that never require authentication.
+_AUTH_EXEMPT_ENDPOINTS = {"index", "health", "static"}
+
+
+def _check_api_key() -> bool:
+    """Return True if the request carries a valid API key."""
+    if not _API_SECRET_KEY:
+        return True  # auth disabled when no key configured
+    header = request.headers.get("Authorization", "")
+    if header.startswith("Bearer "):
+        token = header[7:].strip()
+        # Constant-time comparison to prevent timing attacks.
+        return hashlib.sha256(token.encode()).hexdigest() == hashlib.sha256(
+            _API_SECRET_KEY.encode()
+        ).hexdigest()
+    return False
+
+
+@app.before_request
+def _enforce_auth():
+    """Require a valid API key for all /api/ routes (except exempt ones)."""
+    if request.endpoint in _AUTH_EXEMPT_ENDPOINTS:
+        return None
+    if not request.path.startswith("/api/"):
+        return None
+    if not _check_api_key():
+        return jsonify({"error": "unauthorized — set Authorization: Bearer <API_SECRET_KEY>"}), 401
+    return None
+
+
+# --- Security: Restrictive CORS policy ---
+_ALLOWED_ORIGIN = os.environ.get("CORS_ALLOWED_ORIGIN", "").strip()
+
+
+@app.after_request
+def _apply_security_headers(response):
+    """Add CORS and basic security headers to every response."""
+    origin = request.headers.get("Origin", "")
+    if _ALLOWED_ORIGIN:
+        if origin == _ALLOWED_ORIGIN:
+            response.headers["Access-Control-Allow-Origin"] = _ALLOWED_ORIGIN
+    elif origin:
+        # When no explicit origin is configured, allow same-origin only.
+        response.headers["Access-Control-Allow-Origin"] = origin
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    return response
 jobs = JobManager()
 crm = DatabaseCRMStore(CRM_DB_FILE)
 presets = PresetStore(PRESETS_DATA_FILE)
@@ -4303,12 +4375,15 @@ def run_job(job_id: str) -> None:
         maybe_auto_save_crm_job_file(tracked_rows)
         dispatch_job_notification("completed")
     except Exception as exc:
+        # Log full traceback for server-side debugging, but only store
+        # the exception summary in the job record (no stack frames).
+        logger.error(f"Job {job_id} failed: {exc}", exc_info=True)
         jobs.update(
             job_id,
             status="failed",
             finished_at=utc_now_iso(),
             message="Failed",
-            error=f"{exc}\n{traceback.format_exc(limit=1)}",
+            error=str(exc),
         )
         dispatch_job_notification("failed")
 
@@ -4831,6 +4906,15 @@ def download_checkpoint(job_id: str):
         return jsonify({"error": "job not found"}), 404
     checkpoint_file = str(job.get("checkpoint_file", "")).strip()
     if not checkpoint_file or not Path(checkpoint_file).exists():
+        return jsonify({"error": "checkpoint file not available"}), 404
+
+    # Security: ensure the file is inside our runtime data directory.
+    try:
+        resolved = Path(checkpoint_file).resolve()
+        if not str(resolved).startswith(str(_runtime_root_dir().resolve())):
+            logger.warning(f"Blocked checkpoint download outside data dir: {resolved}")
+            return jsonify({"error": "checkpoint file not available"}), 404
+    except Exception:
         return jsonify({"error": "checkpoint file not available"}), 404
 
     return send_file(
@@ -5675,6 +5759,11 @@ def export_all_data():
     )
 
 if __name__ == "__main__":
-    import os
-    debug_mode = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    import os as _os
+    debug_mode = _os.environ.get("FLASK_DEBUG", "False").lower() == "true"
+    if debug_mode:
+        logger.warning(
+            "FLASK_DEBUG is enabled — the interactive debugger is active. "
+            "NEVER use this in a production or publicly-accessible deployment."
+        )
     app.run(host="127.0.0.1", port=8000, debug=debug_mode)
