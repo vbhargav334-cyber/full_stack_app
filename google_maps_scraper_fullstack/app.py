@@ -3828,9 +3828,9 @@ def run_job(job_id: str) -> None:
     if speed_profile not in {"balanced", "max_speed", "email_fast"}:
         speed_profile = "balanced"
 
-    effective_max_retries = _to_int(params.get("max_retries", 2), default=2, low=1, high=8)
-    effective_min_delay = _to_float(params.get("min_delay", 0.35), default=0.35, low=0.2, high=8.0)
-    effective_max_delay = _to_float(params.get("max_delay", 0.85), default=0.85, low=0.3, high=12.0)
+    effective_max_retries = _to_int(params.get("max_retries", DEFAULT_MAX_RETRIES), default=DEFAULT_MAX_RETRIES, low=1, high=8)
+    effective_min_delay = _to_float(params.get("min_delay", DEFAULT_MIN_DELAY), default=DEFAULT_MIN_DELAY, low=0.2, high=8.0)
+    effective_max_delay = _to_float(params.get("max_delay", DEFAULT_MAX_DELAY), default=DEFAULT_MAX_DELAY, low=0.3, high=12.0)
     if effective_min_delay > effective_max_delay:
         effective_min_delay, effective_max_delay = effective_max_delay, effective_min_delay
 
