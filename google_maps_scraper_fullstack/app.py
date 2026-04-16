@@ -21,6 +21,12 @@ from email.message import EmailMessage
 from pathlib import Path
 from typing import Any, Dict, List
 
+from dotenv import load_dotenv
+
+# Load .env file from the project directory
+_env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(_env_path)
+
 import pandas as pd
 from flask import Flask, jsonify, request, send_file
 from werkzeug.utils import secure_filename
@@ -47,9 +53,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Constants
-MAX_BULK_FILE_SIZE = 10 * 1024 * 1024  # 10MB
-MAX_CHECKPOINT_FILE_SIZE = 50 * 1024 * 1024  # 50MB
+# Constants (configurable via .env)
+MAX_BULK_FILE_SIZE = int(os.environ.get("MAX_BULK_FILE_SIZE", "10")) * 1024 * 1024
+MAX_CHECKPOINT_FILE_SIZE = int(os.environ.get("MAX_CHECKPOINT_FILE_SIZE", "50")) * 1024 * 1024
+
+# Scraper defaults (configurable via .env)
+DEFAULT_HEADLESS = os.environ.get("DEFAULT_HEADLESS", "True").lower() == "true"
+DEFAULT_MAX_RETRIES = int(os.environ.get("DEFAULT_MAX_RETRIES", "3"))
+DEFAULT_MIN_DELAY = float(os.environ.get("DEFAULT_MIN_DELAY", "0.9"))
+DEFAULT_MAX_DELAY = float(os.environ.get("DEFAULT_MAX_DELAY", "1.8"))
 ALLOWED_EXTENSIONS = {'.csv', '.xlsx', '.xls'}
 MAX_CONCURRENT_JOBS = 5
 ZIP_SWEEP_SEED_SUFFIXES = [
@@ -3816,9 +3828,9 @@ def run_job(job_id: str) -> None:
     if speed_profile not in {"balanced", "max_speed", "email_fast"}:
         speed_profile = "balanced"
 
-    effective_max_retries = _to_int(params.get("max_retries", 2), default=2, low=1, high=8)
-    effective_min_delay = _to_float(params.get("min_delay", 0.35), default=0.35, low=0.2, high=8.0)
-    effective_max_delay = _to_float(params.get("max_delay", 0.85), default=0.85, low=0.3, high=12.0)
+    effective_max_retries = _to_int(params.get("max_retries", DEFAULT_MAX_RETRIES), default=DEFAULT_MAX_RETRIES, low=1, high=8)
+    effective_min_delay = _to_float(params.get("min_delay", DEFAULT_MIN_DELAY), default=DEFAULT_MIN_DELAY, low=0.2, high=8.0)
+    effective_max_delay = _to_float(params.get("max_delay", DEFAULT_MAX_DELAY), default=DEFAULT_MAX_DELAY, low=0.3, high=12.0)
     if effective_min_delay > effective_max_delay:
         effective_min_delay, effective_max_delay = effective_max_delay, effective_min_delay
 
@@ -4324,6 +4336,28 @@ def health():
     return jsonify({"status": "ok", "timestamp_utc": utc_now_iso()})
 
 
+@app.get("/api/config")
+def get_app_config():
+    """Return the current application configuration loaded from .env."""
+    return jsonify({
+        "flask": {
+            "debug": os.environ.get("FLASK_DEBUG", "False").lower() == "true",
+            "host": os.environ.get("FLASK_HOST", "127.0.0.1"),
+            "port": int(os.environ.get("FLASK_PORT", "8000")),
+        },
+        "file_limits": {
+            "max_bulk_file_size_mb": MAX_BULK_FILE_SIZE // (1024 * 1024),
+            "max_checkpoint_file_size_mb": MAX_CHECKPOINT_FILE_SIZE // (1024 * 1024),
+        },
+        "scraper_defaults": {
+            "headless": DEFAULT_HEADLESS,
+            "max_retries": DEFAULT_MAX_RETRIES,
+            "min_delay": DEFAULT_MIN_DELAY,
+            "max_delay": DEFAULT_MAX_DELAY,
+        },
+    })
+
+
 @app.get("/api/notifications/config")
 def get_notifications_config():
     return jsonify({"config": notifications.get_config(include_secrets=False)})
@@ -4366,10 +4400,10 @@ def create_job():
             keyword = manual_query
         location = str(data.get("location", "")).strip()
         max_results = _to_int(data.get("max_results", 20), default=20, low=1, high=200)
-        headless = _to_bool(data.get("headless", True), default=True)
-        max_retries = _to_int(data.get("max_retries", 2), default=2, low=1, high=8)
-        min_delay = _to_float(data.get("min_delay", 0.35), default=0.35, low=0.2, high=8.0)
-        max_delay = _to_float(data.get("max_delay", 0.85), default=0.85, low=0.3, high=12.0)
+        headless = _to_bool(data.get("headless", DEFAULT_HEADLESS), default=DEFAULT_HEADLESS)
+        max_retries = _to_int(data.get("max_retries", DEFAULT_MAX_RETRIES), default=DEFAULT_MAX_RETRIES, low=1, high=8)
+        min_delay = _to_float(data.get("min_delay", DEFAULT_MIN_DELAY), default=DEFAULT_MIN_DELAY, low=0.2, high=8.0)
+        max_delay = _to_float(data.get("max_delay", DEFAULT_MAX_DELAY), default=DEFAULT_MAX_DELAY, low=0.3, high=12.0)
         competitor_radius_km = _to_float(data.get("competitor_radius_km", 5.0), default=5.0, low=0.0, high=30.0)
         checkpoint_every = _to_int(data.get("checkpoint_every", 10), default=10, low=1, high=1000)
         dedupe_enabled = _to_bool(data.get("dedupe_enabled", True), default=True)
@@ -5675,6 +5709,7 @@ def export_all_data():
     )
 
 if __name__ == "__main__":
-    import os
     debug_mode = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
-    app.run(host="127.0.0.1", port=8000, debug=debug_mode)
+    flask_host = os.environ.get("FLASK_HOST", "127.0.0.1")
+    flask_port = int(os.environ.get("FLASK_PORT", "8000"))
+    app.run(host=flask_host, port=flask_port, debug=debug_mode)
